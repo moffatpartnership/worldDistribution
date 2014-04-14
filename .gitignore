@@ -6,4 +6,5 @@
 *.txt
 *.xls
 *.ai
+.DS_Store
 /worldDistroArtwork.html
