@@ -1,6 +1,6 @@
 # Intellij
 .idea/
-ignore/
+/ignore/
 *.iml
 *.iws
 *.txt
