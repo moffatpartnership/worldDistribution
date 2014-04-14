@@ -372,61 +372,12 @@ window.WDViewer = {};
 
 })();
 
-// highlight
-(function(){
-
-    var interactionObject, viewInteraction;
-
-    function Highlight() {
-
-        interactionObject = {
-            state:"inactive",
-            data:"Nil"
-        };
-    }
-
-    Highlight.prototype.dataLoad = function(viewData) {
-
-        viewInteraction = viewData;
-    };
-
-    Highlight.prototype.background = function(displayObject) {
-
-
-    };
-
-    Highlight.prototype.redraw = function(displayObject) {
-
-
-    };
-
-    Highlight.prototype.eventlayer = function(displayObject) {
-
-
-    };
-
-    Highlight.prototype.currentState = function() {
-
-        return interactionObject
-    };
-
-    Highlight.prototype.resetInteraction = function(){
-
-        interactionObject.state = "inactive";
-        interactionObject.data = "Nil";
-    };
-
-    WDViewer.Highlight = Highlight;
-
-})();
-
 // renderer
 (function(){
 
     var stats, canvas, stage, view, control, highlight,
         artboard, artboardBackground, artboardRedraw, artboardEventArea,
         dashboardRedraw, dashboardBackground, dashboardEventArea,
-        highlightContainer, highlightBackground, highlightRedraw, highlightEventArea,
         loader, loadStatus;
 
     WDViewer.loadInit = function(){
@@ -436,9 +387,6 @@ window.WDViewer = {};
 
         // prepare the view
         view = new WDViewer.Artboard(wdappWidth,wdappHeight);
-
-        // prepare the highlight
-        highlight = new WDViewer.Highlight();
 
         // prepare the dashboard
         control = new WDViewer.Dashboard();
@@ -494,22 +442,6 @@ window.WDViewer = {};
         dashboardRedraw  = new createjs.Container();
         stage.addChild(dashboardRedraw);
 
-        // highlight
-        highlightContainer = new createjs.Container();
-        highlightContainer.y = 20;
-        stage.addChild(highlightContainer);
-
-        highlightBackground = new createjs.Container();
-        highlightBackground.cache(0, 0, wdappWidth, wdappHeight);
-        highlightContainer.addChild(highlightBackground);
-
-        highlightRedraw  = new createjs.Container();
-        stage.addChild(highlightRedraw);
-
-        highlightEventArea = new createjs.Container();
-        highlightEventArea.cache(0, 0, wdappWidth, wdappHeight);
-        highlightContainer.addChild(highlightEventArea);
-
         TweenMax.ticker.addEventListener("tick", frameRender);
 
     }
@@ -538,35 +470,14 @@ window.WDViewer = {};
         //stats.begin();
 
         artboardRedraw.removeAllChildren();
-        highlightRedraw.removeAllChildren();
         dashboardRedraw.removeAllChildren();
 
         view.redraw(artboardRedraw);
-        highlight.redraw(highlightRedraw);
         control.redraw(dashboardRedraw);
 
         var viewData = view.interaction();
 
-        if (viewData.state === "openhighlight") {
-            highlight.dataLoad(viewData);
-            highlight.eventlayer(highlightEventArea);
-            highlight.background(highlightBackground);
-            view.resetInteraction()
-        }
-
         view.zoom(control.userFeedback());
-
-        var highlightData = highlight.currentState();
-
-        if (highlightData.state === "closehighlight") {
-            highlightBackground.removeAllChildren();
-            highlightBackground.updateCache();
-
-            highlightEventArea.removeAllChildren();
-            highlightEventArea.updateCache();
-
-            highlight.resetInteraction()
-        }
 
         // update stage
         stage.update();
