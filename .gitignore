@@ -1,0 +1,8 @@
+# Intellij
+.idea/
+*.iml
+*.iws
+*.txt
+*.xls
+*.ai
+/worldDistroArtwork.html
