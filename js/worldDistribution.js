@@ -20,7 +20,7 @@ window.WDViewer = {};
 
         var storygroupid = document.getElementById("canvasWorldDistribution").getAttribute("data-haplogroup-id");
 
-        $.getJSON('https://api.moffpart.com/api/1/databases/sdnacontent/collections/c2WorldDistribution?q={"storygroupid":"'+ storygroupid +'"}&apiKey=50e55b5fe4b00738efa04da0&callback=?', function(ret) {
+        $.getJSON('https://api.moffpart.com/api/1/results/getHaplogroup?q='+ storygroupid +'&c=c2WorldDistribution&callback=?', function(ret) {
 
             mapItems = ret[0].mapItems;
             keyItems = ret[0].keyItems;
