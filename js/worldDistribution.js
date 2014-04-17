@@ -114,6 +114,8 @@ window.WDViewer = {};
 
         keyItems = data.keyItems;
 
+        console.log(wdimages[0].src)
+
         newt = new createjs.Bitmap(wdimages[0].src);
     };
 
